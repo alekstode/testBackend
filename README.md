@@ -1,5 +1,6 @@
 # testBackend
 # Factory line manager
+[![Build Status](https://travis-ci.com/alekstode/testBackend.svg?branch=main)](https://travis-ci.com/alekstode/testBackend)
 [![Travis][build-badge]][build]
 [![Coveralls][coveralls-badge]][coveralls]
 
