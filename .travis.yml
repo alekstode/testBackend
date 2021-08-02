@@ -9,5 +9,7 @@ before_script:
   - dotnet restore
 script:
   - dotnet build ReactApplication.sln -c Release
+  - dotnet test ../ReactApplication.Tests/bin/Debug/netcoreapp3.1/ReactApplication.Tests.dll
+  - dotnet test ../BLL.Test/bin/Debug/netcoreapp3.1/ReactApplication.Tests.dll
   #mono ./testrunner/NUnit.ConsoleRunner.3.9.0/tools/nunit3-console.exe ./MyProject.Tests/bin/Release/MyProject.Tests.dll
 
