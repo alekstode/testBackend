@@ -2,9 +2,9 @@ language: csharp
 mono: none
 dotnet: 3.1.411
 solution: ReactApplication.sln
-install:
+#install:
 #  - nuget restore ReactApplication.sln
-  - nuget install NUnit.Console -Version 3.9.0 -OutputDirectory testrunner
+#  - nuget install NUnit.Console -Version 3.9.0 -OutputDirectory testrunner
 before_script:
   - dotnet restore
 script:
