@@ -7,8 +7,4 @@ before_script:
 script:
   - dotnet build ReactApplication.sln -c Release
   - dotnet test ReactApplication.Tests/ReactApplication.Tests.csproj
-  #- dotnet test ./ReactApplication.Tests-c Release -f netcoreapp3.1.411
-
-  #- dotnet test ReactApplication.Tests/ReactApplication.Tests.csproj -f netcoreapp2.1
- # - dotnet test BLL.Test/BLL.Test.csproj -f netcoreapp2.1
-  #mono ./testrunner/NUnit.ConsoleRunner.3.9.0/tools/nunit3-console.exe ./MyProject.Tests/bin/Release/MyProject.Tests.dll
+  - dotnet test BLL.Test/BLL.Test.csproj
