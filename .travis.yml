@@ -3,10 +3,11 @@ mono: none
 dotnet: 3.1.411
 solution: ReactApplication.sln
 install:
-  - nuget restore ReactApplication.sln
+#  - nuget restore ReactApplication.sln
   - nuget install NUnit.Console -Version 3.9.0 -OutputDirectory testrunner
-#before_script:
-#  - dotnet restore
+before_script:
+  - dotnet restore
 script:
   - dotnet build ReactApplication.sln -c Release
+  #mono ./testrunner/NUnit.ConsoleRunner.3.9.0/tools/nunit3-console.exe ./MyProject.Tests/bin/Release/MyProject.Tests.dll
 
