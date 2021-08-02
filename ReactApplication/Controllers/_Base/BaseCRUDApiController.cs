@@ -18,7 +18,7 @@ namespace PL.API.Open.Controllers
         /// </summary>
         /// <returns>Returns a list of records</returns>
         [HttpGet]
-        public object Get()
+        public virtual object Get()
         {
             var data = db.Set<Dto>().Items();
             return data;
@@ -30,7 +30,7 @@ namespace PL.API.Open.Controllers
         /// <param name="id"></param>
         /// <returns>Returns a single record</returns>
         /// <response code="404">Record not found</response>    
-        [HttpGet("{id}", Name = "Get")]
+        [HttpGet("{id}")]
         public virtual object Get(KeyType id)
         {
             try

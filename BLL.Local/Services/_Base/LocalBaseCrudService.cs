@@ -5,6 +5,7 @@ using BLL.Interface;
 using BLL.Interface.Exception;
 using DAL.Interface;
 
+// Основной базовый класс для всех сервисов. Если требуются какие-то особые функции, можно переопределить
 namespace BLL.Local.Services.Base
 {
     public class LocalBaseCrudService<Dto, KeyType> : ICrudService<Dto, KeyType>
@@ -17,7 +18,8 @@ namespace BLL.Local.Services.Base
         {
             SetUnitOfWork(uow);
         }
-
+        
+        // На случай кастомного конструктора в дочернем классе для доступа к координатору
         protected void SetUnitOfWork(IUnitOfWork uow)
         {
             db = uow;
@@ -25,13 +27,17 @@ namespace BLL.Local.Services.Base
         #endregion
 
         #region Load Data
-        public virtual List<Dto> Items()
+        // Получает всю коллекцию. 
+        public virtual IEnumerable<Dto> Items()
         {
+            // db.Set - выдаёт нужный репозиторий через координатор
             return db.Set<Dto>().Items();
         }
 
+        // Получение одного элемента
         public virtual Dto GetOneById(KeyType id)
         {
+            // db.Set - выдаёт нужный репозиторий через координатор
             var item = db.Set<Dto, KeyType>().GetOneById(id);
             if(item == null)
             {
@@ -42,17 +48,23 @@ namespace BLL.Local.Services.Base
         #endregion
 
         #region CUD
+        // Может использоваться для каких-то дополнительных действий.
+        // Н-р логирование на конкретных сервисах
         protected virtual void BeforeAdd(Dto item) { }
+        // Может использоваться для каких-то кастомных валидаций
         protected virtual string ValidateAdd(Dto item) { return string.Empty; }
-        protected virtual bool UseUniqueValidation() { return false; }
+        // Отображает необходимость проверки уникальности записи перед добавлением
+        // Если для какого-то сервиса нужна - переопределяется в сервисе на true
+        protected virtual bool UseUniqueValidation => false;
 
+        // Добавление новой записи
         public virtual Dto Add(Dto item)
         {
             if (!item.IsNew())
             {
                 throw MakeInvalidOperationException(item.id);
             }
-            if (UseUniqueValidation())
+            if (UseUniqueValidation)
             {
                 var hasSameItem = db.Set<Dto>().HasSameItem(item);
                 if (hasSameItem)
@@ -69,14 +81,24 @@ namespace BLL.Local.Services.Base
             return db.Set<Dto>().Add(item);
         }
 
+        // Как и при добавлении может использоваться для каких-то дополнительных действий
         protected virtual void BeforeUpdate(Dto item) { }
         protected virtual string ValidateUpdate(Dto item) { return string.Empty; }
+        // Обновление записи
         public virtual Dto Update(Dto item)
         {
             var itemToUpdate = db.Set<Dto, KeyType>().GetOneById(item.id);
             if (itemToUpdate == null)
             {
                 throw MakeNullReferenceWithItem(item);
+            }
+            if (UseUniqueValidation)
+            {
+                var hasSameItem = db.Set<Dto>().HasSameItem(item);
+                if (hasSameItem)
+                {
+                    throw MakeNonUniqueException();
+                }
             }
             var validationMessage = ValidateUpdate(item);
             if (!string.IsNullOrWhiteSpace(validationMessage))
@@ -87,7 +109,9 @@ namespace BLL.Local.Services.Base
             return db.Set<Dto>().Update(item);
         }
 
+        // Как и при добавлении может использоваться для каких-то дополнительных действий
         protected virtual void BeforeDelete(KeyType id) { }
+        // Удаление записи
         public virtual void RemoveById(KeyType id)
         {
             var itemToRemove = db.Set<Dto, KeyType>().GetOneById(id);
@@ -115,28 +139,24 @@ namespace BLL.Local.Services.Base
 
         private string MakeMessageNullReferenceWithId(KeyType id)
         {
-            var typeName = typeof(Dto).Name;
-            return $"{typeName} with id = {id} not found";
+            return $"{typeof(Dto).Name} with id = {id} not found";
         }
 
         private InvalidOperationException MakeInvalidOperationException(KeyType id)
         {
-            var typeName = typeof(Dto).Name;
-            var message = $"This operation is invalid for provided {typeName}";
+            var message = $"This operation is invalid for provided {typeof(Dto).Name}";
             return new InvalidOperationException(message);
         }
 
         protected CustomValidationException MakeValidationException(string message)
         {
-            var typeName = typeof(Dto).Name;
-            var msg = $"Validation error for {typeName}. {message}";
+            var msg = $"Validation error for {typeof(Dto).Name}. {message}";
             return new CustomValidationException(msg);
         }
 
         protected NonUniqueException MakeNonUniqueException()
         {
-            var typeName = typeof(Dto).Name;
-            var msg = $"{typeName} with same fields are already exists";
+            var msg = $"{typeof(Dto).Name} with same fields are already exists";
             return new NonUniqueException(msg);
         }
         #endregion

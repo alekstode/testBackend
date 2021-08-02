@@ -9,10 +9,10 @@ using BLL.Interface.Interface;
 using DAL.Interface.Repository;
 using Microsoft.EntityFrameworkCore;
 
-namespace DAL.EF.Repository
+namespace EfStub.EF
 {
-    public class StubBaseIdIntRepository<Dto> : StubBaseRepository<Dto, int>
-        where Dto : IEntityWithId<int>, ICloneable
+    public class StubBaseIdIntEf<Entity> : StubBaseEf<Entity, int>
+        where Entity : IEntityWithId<int>
     {
 
         #region CUD

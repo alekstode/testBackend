@@ -86,7 +86,7 @@ namespace DAL.EF.Repository.Base
         {
             get
             {
-                return db.Set<Entity>().AsNoTracking();
+                return db.Set<Entity>().AsQueryable().AsNoTracking();
             }
         }
     }

@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using System.Data;
 using System.Text;
 using BLL.Interface;
-//using BLL.Interface.Dto;
-//using BLL.Interface.Interface;
 using BLL.Local.Services;
 using BLL.Local.Services.Base;
 using DAL.EF;
 using DAL.Interface;
 
+// Основной класс-координатор слоя логики
 namespace BLL.Local
 {
     public partial class LocalProvider : IComplexProvider
@@ -29,11 +28,15 @@ namespace BLL.Local
             UseCustomServices(dtoType);
         }
 
+        // Может использоваться для инициализации всех сервисов
+        // Удобно использовать для небольших проектов
         public void UseAllServices()
         {
-            throw new Exception();
+            throw new NotImplementedException();
         }
-
+        
+        // Получение сервиса для операций, где не требуется фильтр по id
+        // Например, 
         public ICrudService<Dto> Set<Dto>() where Dto : IBaseDto
         {
             var type = typeof(Dto);
@@ -42,6 +45,9 @@ namespace BLL.Local
 
             return (ICrudService<Dto>)AllServices[type];
         }
+
+        // Получение сервиса для операций, где нужен фильтр по id
+        // Например, получение одной записи
         public ICrudService<Dto, KeyType> Set<Dto, KeyType>() where Dto : IBaseDto, IEntityWithId<KeyType>
         {
             var type = typeof(Dto);

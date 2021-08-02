@@ -95,6 +95,10 @@ namespace PL.API.Open.Controllers.Base
             {
                 return NotFound(e.Message);
             }
+            catch (NonUniqueException e)
+            {
+                return StatusCode((int)HttpStatusCode.Conflict, e.Message);
+            }
             catch (CustomValidationException e)
             {
                 return BadRequest(e.Message);

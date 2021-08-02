@@ -9,15 +9,15 @@ using BLL.Interface.Interface;
 using DAL.Interface.Repository;
 using Microsoft.EntityFrameworkCore;
 
-namespace DAL.EF.Repository
+namespace EfStub.EF
 {
-    public class StubBaseRepository<Dto, KeyType> 
-        where Dto: IEntityWithId<KeyType>, ICloneable
+    public class StubBaseEf<Entity, KeyType> 
+        where Entity : IEntityWithId<KeyType>
     {
-        protected List<Dto> TheWholeEntities;
+        protected List<Entity> TheWholeEntities;
 
         #region Init test Data
-        public StubBaseRepository()
+        public StubBaseEf()
         {
             InitData();
         }
@@ -26,29 +26,21 @@ namespace DAL.EF.Repository
         #endregion
 
         #region Load Data
-        public Dto GetOneById(KeyType id)
+        public IQueryable<Entity> Items()
         {
-            var item = TheWholeEntities
-                .FirstOrDefault(x => x.id.Equals(id));
-            return item;
-        }
-
-        public List<Dto> Items()
-        {
-            return TheWholeEntities;
+            return TheWholeEntities.AsQueryable();
         }
         #endregion
 
         #region CUD
-        public Dto Add(Dto dto)
+        public Entity Add(Entity dto)
         {
-            var newDto = (Dto)dto.Clone();
             var id = GetNextKey();
-            newDto.id = id;
+            dto.id = id;
             
-            TheWholeEntities.Add(newDto);
+            TheWholeEntities.Add(dto);
 
-            return newDto;
+            return dto;
         }
 
         protected virtual KeyType GetNextKey()
@@ -56,16 +48,14 @@ namespace DAL.EF.Repository
             throw new NotImplementedException();
         }
 
-        public Dto Update(Dto dto)
+        public Entity Update(Entity entity)
         {
-            var old = TheWholeEntities.First(x => x.id.Equals(dto.id));
+            var old = TheWholeEntities.First(x => x.id.Equals(entity.id));
             var index = TheWholeEntities.IndexOf(old);
 
-            var newDto = (Dto)dto.Clone();
+            TheWholeEntities[index] = entity;
 
-            TheWholeEntities[index] = newDto;
-
-            return newDto;
+            return entity;
         }
 
         public void RemoveById(KeyType id)
@@ -74,7 +64,7 @@ namespace DAL.EF.Repository
             TheWholeEntities.Remove(old);
         }
 
-        public virtual bool HasSameItem(Dto dto)
+        public virtual bool HasSameItem(Entity entity)
         {
             throw new NotImplementedException();
         }

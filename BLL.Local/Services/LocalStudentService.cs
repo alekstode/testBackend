@@ -11,5 +11,10 @@ namespace BLL.Local.Services
     public class LocalStudentService : LocalBaseCrudService<StudentDto, int>, IStudentService
     {
         public LocalStudentService(IUnitOfWork uow) : base(uow) { }
+
+        #region CUD
+        // Используем проверку на уникальность в этом сервисе
+        protected override bool UseUniqueValidation => true;
+        #endregion
     }
 }

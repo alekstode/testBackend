@@ -12,9 +12,9 @@ namespace BLL.Interface.Dto
         public string code { get; set; }
 
         public override int GetHashCode() => (id, name, code, description).GetHashCode();
-        public override bool Equals(object other) => other is SexDto dto && Equals(dto);
+        public override bool Equals(object other) => other is AcademicPerformanceDto dto && Equals(dto);
 
-        public bool Equals(SexDto dto)
+        public bool Equals(AcademicPerformanceDto dto)
         {
             return
                    id == dto.id

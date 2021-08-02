@@ -8,9 +8,15 @@ namespace BLL.Interface
     {
         bool IsNew();
     }
-    public abstract class DtoInt : IEntityWithId<int>, IBaseDto
+    public abstract class DtoInt : IEntityWithId<int>, IBaseDto, ICloneable
     {
         public int id { get; set; }
+
+        public virtual object Clone()
+        {
+            return MemberwiseClone();
+        }
+
         public bool IsNew()
         {
             return id == 0;

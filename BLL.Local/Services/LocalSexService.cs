@@ -18,10 +18,8 @@ namespace BLL.Local.Services
 
 
         #region CUD
-        protected override bool UseUniqueValidation()
-        {
-            return true;
-        }
+        // Используем проверку на уникальность в этом сервисе
+        protected override bool UseUniqueValidation => true;
         #endregion
     }
 }

@@ -1,49 +1,45 @@
-using BLL.Interface.Dto;
-using BLL.Interface.Interface;
-using DAL.Interface;
+using DAL.EF.EF.Entities;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
-using BLL.Interface.Exception;
 
-namespace BLL.Local.Services
+namespace EfStub.EF
 {
-    public class StubSexService : StubBaseIntService<SexDto>, ISexService
+    public class StubSexEf : StubBaseIdIntEf<Sex>
     {
         #region Init test Data
         protected override void InitData()
         {
-            var sexFemale = new SexDto()
+            var sexFemale = new Sex()
             {
                 id = 1,
                 code = "female",
                 name = "Женский",
                 description = ""
             };
-            var sexMale = new SexDto()
+            var sexMale = new Sex()
             {
                 id = 2,
                 code = "male",
                 name = "Мужской",
                 description = ""
             };
-            TheWholeEntities = new List<SexDto>() { sexFemale, sexMale };
+            TheWholeEntities = new List<Sex>() { sexFemale, sexMale };
         }
         #endregion
 
         #region CUD
-        protected override bool UseUniqueValidation() { return true; }
-
-        protected override bool HasSameItem(SexDto dto)
+        public override bool HasSameItem(Sex dto)
         {
             return TheWholeEntities.Any(x =>
-                x.code.ToLower() == dto.code.ToLower()
+                   x.code.ToLower() == dto.code.ToLower()
                 && x.description.ToLower() == dto.description.ToLower()
                 && x.name.ToLower() == dto.name.ToLower()
             );
         }
-        #endregion
 
+        #endregion
     }
 }

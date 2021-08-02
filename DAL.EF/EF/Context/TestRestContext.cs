@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using DAL.EF.EF.Entities;
+using Microsoft.Extensions.Configuration;
 
 #nullable disable
 
@@ -26,30 +27,49 @@ namespace DAL.EF.EF.Context
         {
             if (!optionsBuilder.IsConfigured)
             {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Server=(local);Database=TestRest;Trusted_Connection=True;");
+                IConfigurationRoot configuration = new ConfigurationBuilder()
+                    .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
+                    .AddJsonFile("appsettings.json")
+                    .Build();
+                optionsBuilder.UseNpgsql(configuration.GetConnectionString("DefaultConnection"));
             }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.HasAnnotation("Relational:Collation", "Cyrillic_General_CI_AS");
+            modelBuilder.HasAnnotation("Relational:Collation", "Russian_Russia.1251");
 
             modelBuilder.Entity<AcademicPerformance>(entity =>
             {
                 entity.ToTable("AcademicPerformance");
+
+                entity.Property(e => e.code).HasColumnType("character varying");
+
+                entity.Property(e => e.description).HasColumnType("character varying");
+
+                entity.Property(e => e.name).HasColumnType("character varying");
             });
 
             modelBuilder.Entity<Sex>(entity =>
             {
                 entity.ToTable("Sex");
+
+                entity.Property(e => e.code).HasColumnType("character varying");
+
+                entity.Property(e => e.description).HasColumnType("character varying");
+
+                entity.Property(e => e.name).HasColumnType("character varying");
             });
 
             modelBuilder.Entity<Student>(entity =>
             {
                 entity.ToTable("Student");
 
-                entity.Property(e => e.dob).HasColumnType("datetime");
+                entity.Property(e => e.firstName).HasColumnType("character varying");
+
+                entity.Property(e => e.secondName).HasColumnType("character varying");
+
+                entity.Property(e => e.surName).HasColumnType("character varying");
 
                 entity.HasOne(d => d.idAcademicPerformanceNavigation)
                     .WithMany(p => p.Students)

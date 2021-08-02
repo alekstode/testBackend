@@ -7,7 +7,7 @@ namespace BLL.Interface
 {
     public interface ICrudService<T> where T: IBaseDto
     {
-        List<T> Items();
+        IEnumerable<T> Items();
         T Add(T item);
         T Update(T item);
     }

@@ -29,5 +29,14 @@ namespace DAL.EF.Repository
             return TheWholeEntities
                 .Select(x => new LocalAcademicPerformanceDto().ConvertToDto(x)).ToList();
         }
+
+        public override bool HasSameItem(AcademicPerformanceDto dto)
+        {
+            return TheWholeEntities.Any(x =>
+                   x.code.ToLower() == dto.code.ToLower()
+                && x.description.ToLower() == dto.description.ToLower()
+                && x.name.ToLower() == dto.name.ToLower()
+            );
+        }
     }
 }

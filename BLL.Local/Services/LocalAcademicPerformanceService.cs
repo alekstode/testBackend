@@ -11,5 +11,10 @@ namespace BLL.Local.Services
     public class LocalAcademicPerformanceService : LocalBaseCrudService<AcademicPerformanceDto, int>, IAcademicPerformanceService
     {
         public LocalAcademicPerformanceService(IUnitOfWork uow) : base(uow) { }
+
+        #region CUD
+        // Используем проверку на уникальность в этом сервисе
+        protected override bool UseUniqueValidation => true;
+        #endregion
     }
 }
