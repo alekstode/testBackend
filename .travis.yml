@@ -9,6 +9,7 @@ before_script:
   - dotnet restore
 script:
   - dotnet build ReactApplication.sln -c Release
+  - dotnet test ./ReactApplication.Tests -c Release -f net3.1.411
   #- dotnet test ./ReactApplication.Tests-c Release -f netcoreapp3.1.411
   #ThinkingHome.Migrator.Tests -c Release -f netcoreapp2.0
   #- dotnet test ReactApplication.Tests/ReactApplication.Tests.csproj -f netcoreapp2.1
