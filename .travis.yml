@@ -6,5 +6,5 @@ before_script:
   - dotnet restore
 script:
   - dotnet build ReactApplication.sln -c Release
-  - dotnet test ReactApplication.Tests/ReactApplication.Tests.csproj
+  #- dotnet test ReactApplication.Tests/ReactApplication.Tests.csproj
   - dotnet test BLL.Test/BLL.Test.csproj
