@@ -7,8 +7,11 @@ before_script:
 script:
 #   "sbt clean coverage test"
   - dotnet build SmlTestTask.sln -c Release
-#  - dotnet test SmlTestTask.Tests/SmlTestTask.Tests.csproj
+  #- dotnet test SmlTestTask.Tests/SmlTestTask.Tests.csproj
   - dotnet test BLL.Test/BLL.Test.csproj
+  - dotnet test -c Release --no-build BLL.Test/BLL.Test.csproj /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
 
    
-after_success: "sbt coveralls"
+#after_success: "sbt coveralls"
+after_script:
+  - bash <(curl -s https://codecov.io/bash)
