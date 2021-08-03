@@ -5,9 +5,10 @@ solution: ReactApplication.sln
 before_script:
   - dotnet restore
 script:
+   "sbt clean coverage test"
   - dotnet build ReactApplication.sln -c Release
   #- dotnet test ReactApplication.Tests/ReactApplication.Tests.csproj
   - dotnet test BLL.Test/BLL.Test.csproj
-  # "sbt clean coverage test"
+
    
 after_success: "sbt coveralls"
