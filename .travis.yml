@@ -1,7 +1,7 @@
 language: csharp
 mono: none
 dotnet: 3.1.411
-solution: ReactApplication.sln
+solution: SmlTestTask.sln
 before_script:
   - dotnet restore
 script:
