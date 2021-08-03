@@ -6,7 +6,6 @@ using System.Text;
 using BLL.Interface.Dto;
 using BLL.Interface.Interface;
 using DAL.EF.Dto;
-using DAL.EF.EF.Context;
 using DAL.EF.EF.Entities;
 using DAL.EF.Repository.Base;
 using DAL.Interface.Repository;
@@ -18,7 +17,6 @@ namespace DAL.EF.Repository
         EfCrudRepository<Student, StudentDto, LocalStudentDto, int>,
         IStudentRepository
     {
-        public LocalStudentRepository(TestRestContext context) : base(context) { }
         // Добавляем нужные справочники и тд
         protected override IQueryable<Student> TheWholeEntities
         {

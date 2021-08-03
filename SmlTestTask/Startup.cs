@@ -1,5 +1,6 @@
 using BLL.Interface;
 using BLL.Local;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -7,6 +8,8 @@ using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.AspNetCore.SignalR;
+using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,20 +20,18 @@ using System.IO;
 using System.Reflection;
 using System.Text;
 using Microsoft.OpenApi.Models;
-using DAL.EF.EF.Context;
-using DAL.EF;
-using DAL.Interface;
+using WkHtmlToPdfDotNet;
+using WkHtmlToPdfDotNet.Contracts;
 
 namespace SmlTestTask
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration, IWebHostEnvironment appEnv)
+        public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-            CurrentEnvironment = appEnv;
         }
-        private IWebHostEnvironment CurrentEnvironment { get; set; }
+
         public IConfiguration Configuration { get; }
 
         public void ConfigureServices(IServiceCollection services)
@@ -49,31 +50,7 @@ namespace SmlTestTask
 
             services.AddCors();
 
-            switch (CurrentEnvironment.EnvironmentName)
-            {
-                case "Development":
-                case "Production":
-                    IConfigurationRoot configuration = new ConfigurationBuilder()
-                        .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
-                        .AddJsonFile("appsettings.json")
-                        .Build();
-                    services.AddDbContext<TestRestContext>(options =>
-                    {
-                        options.UseNpgsql(configuration.GetConnectionString("DefaultConnection"));
-                    });
-                    break;
-                case "Test":
-                    services.AddDbContext<TestRestContext>(options =>
-                    {
-                        options.UseInMemoryDatabase("TestDb");
-                    });
-                    break;
-                default:
-                    throw new NotImplementedException();
-            }
-
             // Используем локальный координатор
-            services.AddScoped<IUnitOfWork, LocalUnitOfWork>();
             services.AddScoped<IComplexProvider, LocalProvider>();
 
             services.AddControllers();
@@ -86,7 +63,6 @@ namespace SmlTestTask
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            CurrentEnvironment = env;
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

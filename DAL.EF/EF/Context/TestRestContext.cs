@@ -27,7 +27,11 @@ namespace DAL.EF.EF.Context
         {
             if (!optionsBuilder.IsConfigured)
             {
-                throw new InvalidOperationException();
+                IConfigurationRoot configuration = new ConfigurationBuilder()
+                    .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
+                    .AddJsonFile("appsettings.json")
+                    .Build();
+                optionsBuilder.UseNpgsql(configuration.GetConnectionString("DefaultConnection"));
             }
         }
 

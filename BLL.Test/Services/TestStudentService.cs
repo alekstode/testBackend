@@ -27,14 +27,6 @@ namespace BLL.Local.Services
             mock.Setup(lr => lr.Set<StudentDto>()).Returns(new StubStudentRepository());
             mock.Setup(lr => lr.Set<StudentDto, int>()).Returns(new StubStudentRepository());
 
-            mock.Setup(lr => lr.Sex).Returns(new StubSexRepository());
-            mock.Setup(lr => lr.Set<SexDto>()).Returns(new StubSexRepository());
-            mock.Setup(lr => lr.Set<SexDto, int>()).Returns(new StubSexRepository());
-            
-            mock.Setup(lr => lr.AcademicPerformance).Returns(new StubAcademicPerformanceRepository());
-            mock.Setup(lr => lr.Set<AcademicPerformanceDto>()).Returns(new StubAcademicPerformanceRepository());
-            mock.Setup(lr => lr.Set<AcademicPerformanceDto, int>()).Returns(new StubAcademicPerformanceRepository());
-
             service = new LocalStudentService(mock.Object);
         }
 

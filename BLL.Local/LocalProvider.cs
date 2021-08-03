@@ -17,10 +17,10 @@ namespace BLL.Local
        
         private IUnitOfWork uow;
 
-        public LocalProvider(IUnitOfWork unitOfWork)
+        public LocalProvider()
         {
             AllServices = new Dictionary<Type, object>();
-            uow = unitOfWork;
+            uow = new LocalUnitOfWork();
         }
 
         public void UseOneService(Type dtoType)
@@ -36,7 +36,7 @@ namespace BLL.Local
         }
         
         // Получение сервиса для операций, где не требуется фильтр по id
-        // Например, получение всего списка
+        // Например, 
         public ICrudService<Dto> Set<Dto>() where Dto : IBaseDto
         {
             var type = typeof(Dto);

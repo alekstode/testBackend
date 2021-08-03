@@ -20,11 +20,6 @@ namespace DAL.EF.Repository.Base
         where LocalDto : ILocalDto<Entity, Dto>, new()
         where Entity : class, IEntityWithId<KeyType>
     {
-
-        protected EfCrudRepository(TestRestContext context)
-        {
-            _db = context;
-        }
         #region Context
         private TestRestContext _db;
 
@@ -33,7 +28,7 @@ namespace DAL.EF.Repository.Base
             get
             {
                 if (_db == null)
-                    throw new NullReferenceException();
+                    _db = new TestRestContext();
                 return _db;
             }
         }

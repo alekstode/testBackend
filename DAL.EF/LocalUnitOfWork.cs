@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Text;
 using BLL.Interface;
-using DAL.EF.EF.Context;
 using DAL.EF.Repository;
 using DAL.Interface;
 
@@ -11,15 +10,13 @@ namespace DAL.EF
     // Координатор уровня репозитория
     public partial class LocalUnitOfWork : IUnitOfWork
     {
-        private TestRestContext db;
         public bool IsInited
         {
             get { return false; }
         }
 
-        public LocalUnitOfWork(TestRestContext context)
+        public LocalUnitOfWork()
         {
-            db = context;
             CustomUnit();
         }
 

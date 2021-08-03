@@ -14,9 +14,9 @@ namespace DAL.EF
     {
         public void CustomUnit()
         {
-            Sex = new LocalSexRepository(db);
-            Student = new LocalStudentRepository(db);
-            AcademicPerformance = new LocalAcademicPerformanceRepository(db);
+            Sex = new LocalSexRepository();
+            Student = new LocalStudentRepository();
+            AcademicPerformance = new LocalAcademicPerformanceRepository();
         }
 
         public ISexRepository Sex { get; private set; }

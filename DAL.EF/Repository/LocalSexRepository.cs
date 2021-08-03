@@ -6,7 +6,6 @@ using System.Text;
 using BLL.Interface.Dto;
 using BLL.Interface.Interface;
 using DAL.EF.Dto;
-using DAL.EF.EF.Context;
 using DAL.EF.EF.Entities;
 using DAL.EF.Repository.Base;
 using DAL.Interface.Repository;
@@ -19,7 +18,6 @@ namespace DAL.EF.Repository
         EfCrudRepository<Sex, SexDto, LocalSexDto, int>,
         ISexRepository
     {
-        public LocalSexRepository(TestRestContext context) : base(context) { }
         // Переопределяем проверку на уникальность
         public override bool HasSameItem(SexDto dto)
         {
