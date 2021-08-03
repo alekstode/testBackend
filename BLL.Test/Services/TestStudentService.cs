@@ -169,29 +169,29 @@ namespace BLL.Local.Services
             Assert.Throws<NonUniqueException>(() => service.Add(newStudent));
         }
 
-        [Test]
-        public void Add_New()
-        {
-            var neededId = 3;
-            var newStudent = new StudentDto()
-            {
-                id = 0,
-                surName = "Петров",
-                firstName = "Петр",
-                secondName = "Петрович",
-                dob = new DateTime(2003, 3, 3),
-                idSex = 2,
-                idSexNavCode = "male",
-                idSexNavName = "Мужской",
-                idAcademicPerformance = 1,
-                idAcademicPerformanceNavCode = "verybad",
-                idAcademicPerformanceNavName = "Фиаско"
-            };
+        //[Test]
+        //public void Add_New()
+        //{
+        //    var neededId = 3;
+        //    var newStudent = new StudentDto()
+        //    {
+        //        id = 0,
+        //        surName = "Петров",
+        //        firstName = "Петр",
+        //        secondName = "Петрович",
+        //        dob = new DateTime(2003, 3, 3),
+        //        idSex = 2,
+        //        idSexNavCode = "male",
+        //        idSexNavName = "Мужской",
+        //        idAcademicPerformance = 1,
+        //        idAcademicPerformanceNavCode = "verybad",
+        //        idAcademicPerformanceNavName = "Фиаско"
+        //    };
 
-            var result = service.Add(newStudent);
-            newStudent.id = neededId;
-            Assert.AreEqual(newStudent, result);
-        }
+        //    var result = service.Add(newStudent);
+        //    newStudent.id = neededId;
+        //    Assert.AreEqual(newStudent, result);
+        //}
         #endregion
 
         #region Update
@@ -217,28 +217,28 @@ namespace BLL.Local.Services
         }
 
 
-        [Test]
-        public void Update_MaleStudent()
-        {
-            var updateMaleStudent = new StudentDto()
-            {
-                id = 1,
-                surName = "Иванов",
-                firstName = "Иван",
-                secondName = "Иванович",
-                dob = new DateTime(1999, 5, 5),
-                idSex = 2,
-                idSexNavCode = "male",
-                idSexNavName = "Мужской",
-                idAcademicPerformance = 5,
-                idAcademicPerformanceNavCode = "excellent",
-                idAcademicPerformanceNavName = "Отлично"
-            };
+        //[Test]
+        //public void Update_MaleStudent()
+        //{
+        //    var updateMaleStudent = new StudentDto()
+        //    {
+        //        id = 1,
+        //        surName = "Иванов",
+        //        firstName = "Иван",
+        //        secondName = "Иванович",
+        //        dob = new DateTime(1999, 5, 5),
+        //        idSex = 2,
+        //        idSexNavCode = "male",
+        //        idSexNavName = "Мужской",
+        //        idAcademicPerformance = 5,
+        //        idAcademicPerformanceNavCode = "excellent",
+        //        idAcademicPerformanceNavName = "Отлично"
+        //    };
 
-            var result = service.Update(updateMaleStudent);
+        //    var result = service.Update(updateMaleStudent);
 
-            Assert.AreEqual(updateMaleStudent, result);
-        }
+        //    Assert.AreEqual(updateMaleStudent, result);
+        //}
         #endregion
 
         #region Remove
