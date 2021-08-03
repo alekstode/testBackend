@@ -20,6 +20,11 @@ namespace DAL.EF.Repository.Base
         where LocalDto : ILocalDto<Entity, Dto>, new()
         where Entity : class, IEntityWithId<KeyType>
     {
+
+        protected EfCrudRepository(TestRestContext context)
+        {
+            _db = context;
+        }
         #region Context
         private TestRestContext _db;
 
@@ -28,7 +33,7 @@ namespace DAL.EF.Repository.Base
             get
             {
                 if (_db == null)
-                    _db = new TestRestContext();
+                    throw new NullReferenceException();
                 return _db;
             }
         }
@@ -37,7 +42,7 @@ namespace DAL.EF.Repository.Base
         #region Load Data
         public virtual List<Dto> Items()
         {
-            return TheWholeEntities.ToList().Select(x => new LocalDto().ConvertToDto(x)).ToList();
+            return TheWholeEntities.OrderBy(x=>x.id).ToList().Select(x => new LocalDto().ConvertToDto(x)).ToList();
         }
 
         public virtual Dto GetOneById(KeyType id)

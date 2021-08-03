@@ -6,6 +6,7 @@
     <TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
     <IsPackable>false</IsPackable>
     <UserSecretsId>b33944ab-209a-4366-b1a2-17a15651592c</UserSecretsId>
+    <Configurations>Debug;Release;Test</Configurations>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -13,37 +14,38 @@
     <NoWarn>1701;1702;1591</NoWarn>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Test|AnyCPU'">
+    <DocumentationFile>SmlTestTask.xml</DocumentationFile>
+  </PropertyGroup>
+
   <ItemGroup>
-    <PackageReference Include="ClosedXML" Version="0.95.4" />
-    <PackageReference Include="DocumentFormat.OpenXml" Version="2.13.0" />
-    <PackageReference Include="Haukcode.WkHtmlToPdfDotNet" Version="1.5.8" />
-    <PackageReference Include="HtmlToOpenXml.dll" Version="2.2.0" />
-    <PackageReference Include="iTextSharp.LGPLv2.Core.Fix" Version="1.2.7" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.13" />
-    <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="5.0.4" />
-    <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="3.1.10" />
+    <Compile Remove="wwwroot\**" />
+    <Content Remove="wwwroot\**" />
+    <EmbeddedResource Remove="wwwroot\**" />
+    <None Remove="wwwroot\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.7">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="5.0.7" />
-    <PackageReference Include="Select.HtmlToPdf.NetCore" Version="21.1.0" />
-    <PackageReference Include="SixLabors.ImageSharp" Version="1.0.3" />
-    <PackageReference Include="SixLabors.ImageSharp.Web" Version="1.0.3" />
-    <PackageReference Include="SixLaborsCaptcha.Mvc.Core" Version="0.1.2" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.1.4" />
     <PackageReference Include="System.Text.Encodings.Web" Version="5.0.0" />
   </ItemGroup>
 
 
   <ItemGroup>
-    <Folder Include="wwwroot\" />
+    <ProjectReference Include="..\BLL.Interface\BLL.Interface.csproj" />
+    <ProjectReference Include="..\BLL.Local\BLL.Local.csproj" />
   </ItemGroup>
 
 
   <ItemGroup>
-    <ProjectReference Include="..\BLL.Interface\BLL.Interface.csproj" />
-    <ProjectReference Include="..\BLL.Local\BLL.Local.csproj" />
+    <None Update="SmlTestTask.xml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 
